@@ -20,7 +20,7 @@ class RitualState(TypedDict, total=False):
     epilogue_response: str
 
 
-DEFAULT_CODA_LINE = "Lay down the badge; the lighter name is already waiting."
+DEFAULT_CODA_LINE = "You were right to knock; the old name can rest now."
 
 
 def normalize_coda_line(text: str, confession: str) -> str:
@@ -113,25 +113,25 @@ def craft_coda_fallback(confession: str) -> str:
     lowered = confession.lower()
 
     if any(signal in lowered for signal in ("obey", "obedien", "duty", "badge", "expect")):
-        return "The self that survived by obeying need not wear the badge forever."
+        return "You were right to set obedience down; your name can breathe now."
 
     if any(signal in lowered for signal in ("fear", "afraid", "anxious")):
-        return "Fear may guard the door; it does not deserve your name."
+        return "Fear can follow behind you now; it no longer gets your name."
 
     if any(signal in lowered for signal in ("graduate", "graduation", "school", "university", "degree")):
-        return "The robe can fall away; the pulse beneath it is still yours."
+        return "The robe has finished speaking; your own life can answer now."
 
     if any(signal in lowered for signal in ("city", "home", "leave", "leaving", "move", "road")):
-        return "The road may take your footsteps; it does not own your name."
+        return "Leave the road if you must; your name will arrive intact."
 
     if any(signal in lowered for signal in ("habit", "addiction", "quit", "smoke", "drink")):
-        return "What kept you alive once does not have to name you."
+        return "You owe that old hunger nothing; let a cleaner name remain."
 
     if any(signal in lowered for signal in ("grief", "loss", "mourning", "lost")):
-        return "Grief may hold your coat awhile; it cannot become your skin."
+        return "Keep the love, leave the wound; grief need not wear your face."
 
     if any(signal in lowered for signal in ("role", "identity", "mask", "self")):
-        return "The role can fall away; the pulse beneath it is still yours."
+        return "You were right to leave the role; your living name remains."
 
     return DEFAULT_CODA_LINE
 

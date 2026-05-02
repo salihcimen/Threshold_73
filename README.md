@@ -1,63 +1,37 @@
 # Threshold_73
 
-KNOCK is a web-based AI artwork built around Bob Dylan's "Knockin' on Heaven's Door" and its historical afterlife.
+`Threshold_73` is an interactive AI artwork built around Bob Dylan's *Knockin' on Heaven's Door*, the film *Pat Garrett & Billy the Kid*, and the historical mood of 1973.
 
-The experience is split into two layers:
+It is designed as a ritual rather than a tool: the user leaves a role, habit, fear, or old identity at the door, and the room answers through four staged voices.
 
-- `frontend`: a scroll-based ritual space where the user enters a personal threshold
-- `backend`: a multi-agent "1973 council" that answers through historically grounded voices
+## What It Is
 
-## Current Structure
+- `frontend`: a scroll-based theatrical interface with a threshold chamber, radio loading sequence, staged replies, and a final full-screen coda
+- `backend`: a FastAPI + LangGraph system that generates historically grounded responses through The Sheriff, The Activist, The Balladeer, and The Coda
+
+## Project Structure
 
 ### Frontend
 
-- `src/main.ts`: scene flow, scroll behavior, UI state, API calls
-- `src/style.css`: art direction, motion, staging, responsive layout
+- `src/main.ts`: scene flow, state, typing choreography, API calls, audio playback
+- `src/style.css`: visual direction, motion, staging, responsive layout
+- `public/threshold73-mark.svg`: site mark and favicon source
 
 ### Backend
 
 - `backend/app/main.py`: FastAPI entry point
-- `backend/app/graph.py`: LangGraph orchestration
-- `backend/app/providers/`: model providers (`mock`, `ollama`)
-- `backend/app/services/`: prompts and historical context selection
+- `backend/app/graph.py`: LangGraph orchestration and coda normalization
+- `backend/app/providers/`: model providers
+- `backend/app/services/`: prompts, context selection, and TTS support
 
-## Roadmap
+## Current Experience
 
-### Phase 1: Foundation
-
-- [x] Establish the visual language
-- [x] Build the scroll-based intro ritual
-- [x] Build the threshold room with the door and confession area
-- [x] Scaffold a FastAPI + LangGraph backend
-- [x] Connect frontend submit flow to backend response rendering
-
-### Phase 2: Working Demo
-
-- [x] Install backend dependencies
-- [x] Run FastAPI locally
-- [x] Test the full request-response loop from the UI
-- [x] Tune live outputs so the council feels more poetic and distinct
-
-### Phase 3: Real Local AI
-
-- [ ] Install and run Ollama locally
-- [ ] Switch provider mode from `mock` to `ollama`
-- [ ] Tune model prompts and response length
-- [ ] Add graceful fallback when the local model is unavailable
-
-### Phase 3B: Free Cloud Fallback
-
-- [x] Add Groq provider support
-- [x] Configure `GROQ_API_KEY`
-- [x] Switch the ritual to cloud inference without local model download
-
-### Phase 4: Exhibition Polish
-
-- [x] Add TTS / radio voice layer
-- [ ] Add agent-by-agent reveal sequence
-- [x] Add loading choreography and sound cues
-- [ ] Replace browser TTS with local Piper voice clips
-- [ ] Prepare screenshots, architecture diagram, and README polish for submission
+- cinematic scroll intro
+- threshold room with confession input
+- three primary response voices
+- full-screen final coda
+- loading sound choreography
+- optional voice relay through browser audio or Piper clips
 
 ## Run
 
@@ -75,7 +49,7 @@ pip install -r backend\requirements.txt
 npm run backend:dev
 ```
 
-### Optional Piper Voice Layer
+### Optional Piper Layer
 
 ```powershell
 pip install -r backend\requirements-piper.txt
@@ -91,5 +65,5 @@ pip install -r backend\requirements-piper.txt
 
 See:
 
-- [backend/.env.example](</C:/Users/burito/Desktop/Lectures/Projects/AI/knock/backend/.env.example>)
-- [backend/README.md](</C:/Users/burito/Desktop/Lectures/Projects/AI/knock/backend/README.md>)
+- [backend/.env.example](./backend/.env.example)
+- [backend/README.md](./backend/README.md)

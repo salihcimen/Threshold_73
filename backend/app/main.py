@@ -133,7 +133,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="KNOCK Backend", lifespan=lifespan)
+app = FastAPI(title="Threshold_73 Backend", lifespan=lifespan)
 
 settings = get_settings()
 app.add_middleware(

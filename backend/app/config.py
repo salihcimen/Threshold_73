@@ -14,7 +14,7 @@ load_dotenv(BASE_DIR / ".env")
 
 @dataclass(slots=True)
 class Settings:
-    app_name: str = "KNOCK Backend"
+    app_name: str = "Threshold_73 Backend"
     api_prefix: str = "/api"
     cors_origin: str = os.getenv("KNOCK_CORS_ORIGIN", "http://localhost:5173")
     model_provider: str = os.getenv("KNOCK_MODEL_PROVIDER", "auto").strip().lower()

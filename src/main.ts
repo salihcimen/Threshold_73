@@ -23,13 +23,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <img
               class="brand-mark"
               src="/threshold73-mark.svg"
-              alt="Threshold 73 logo"
+              alt="Threshold_73 logo"
               width="54"
               height="54"
             />
             <div class="brand-copy">
-              <p class="eyebrow">Threshold 73 / The Room Behind the Song / transmission no. 1973</p>
-              <p class="brand-title">Threshold 73</p>
+              <p class="eyebrow">Threshold_73 / The Room Behind the Song / transmission no. 1973</p>
+              <p class="brand-title">Threshold_73</p>
             </div>
           </div>
           <p class="topbar-note">A threshold staged as radio, dusk, and confession.</p>
@@ -93,12 +93,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <img
               class="stage-brand-mark"
               src="/threshold73-mark.svg"
-              alt="Threshold 73 logo"
+              alt="Threshold_73 logo"
               width="64"
               height="64"
             />
             <div>
-              <p class="section-label">Threshold 73</p>
+              <p class="section-label">Threshold_73</p>
               <p class="stage-brand-subtitle">The Room Behind The Song</p>
             </div>
           </div>
@@ -112,26 +112,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
       <div class="stage-grid">
         <aside class="history-rail">
-          <article class="history-card">
-            <p class="card-label">Archive Thread</p>
-            <p class="archive-lead">
-              A death scene, a protest year, and a song about laying down what can no longer be worn.
-            </p>
-            <ul class="timeline">
-              <li><span>1973</span><strong>The song is written for a dying sheriff in Pat Garrett & Billy the Kid.</strong></li>
-              <li><span>Lyric</span><strong>The badge becomes the emblem of a role that can no longer be worn.</strong></li>
-              <li><span>1973</span><strong>Draft authority expires and refusal takes on a national moral charge.</strong></li>
-              <li><span>Meaning</span><strong>Heaven's door becomes a threshold: not doctrine, but release from an old self.</strong></li>
-              <li><span>2017</span><strong>Dylan insists songs are fulfilled in the hearing, not only on the page.</strong></li>
-            </ul>
-            <div class="archive-tags" aria-label="Archive motifs">
-              <span>badge</span>
-              <span>threshold</span>
-              <span>refusal</span>
-              <span>afterlight</span>
-            </div>
-          </article>
-
           <article class="history-card">
             <p class="card-label">Council Voices</p>
             <div class="voice-list">
@@ -227,7 +207,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="responses-head">
           <div>
             <p class="section-label">The Council Responds</p>
-            <h2 class="responses-title">Three voices arrive through the seam.</h2>
+            <h2 class="responses-title">Three voices gather, and a coda crosses the seam.</h2>
           </div>
           <p class="responses-intro" id="responses-meta" hidden></p>
         </div>
@@ -284,9 +264,22 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
         <section class="epilogue-shell" id="epilogue-shell" hidden aria-live="polite">
           <div class="epilogue-vignette" aria-hidden="true"></div>
-          <div class="epilogue-panel">
+          <div class="epilogue-halo" aria-hidden="true"></div>
+          <div class="epilogue-copy-layer">
             <p class="card-label epilogue-label">The Coda</p>
             <h3 class="epilogue-quote is-awaiting" id="epilogue-quote"></h3>
+            <div class="epilogue-actions">
+              <button type="button" class="epilogue-button" id="epilogue-exit">
+                Leave the room
+              </button>
+              <button
+                type="button"
+                class="epilogue-button is-secondary"
+                id="epilogue-restart"
+              >
+                Begin again
+              </button>
+            </div>
           </div>
         </section>
       </section>
@@ -322,6 +315,8 @@ const transmissionStatus = document.querySelector<HTMLDivElement>('#transmission
 const transmissionChamber = document.querySelector<HTMLDivElement>('#transmission-chamber')
 const epilogueShell = document.querySelector<HTMLElement>('#epilogue-shell')
 const epilogueQuote = document.querySelector<HTMLHeadingElement>('#epilogue-quote')
+const epilogueExit = document.querySelector<HTMLButtonElement>('#epilogue-exit')
+const epilogueRestart = document.querySelector<HTMLButtonElement>('#epilogue-restart')
 const loadingStatus = document.querySelector<HTMLParagraphElement>('#loading-status')
 const loadingDetail = document.querySelector<HTMLParagraphElement>('#loading-detail')
 const broadcastCopy = document.querySelector<HTMLParagraphElement>('#broadcast-copy')
@@ -347,8 +342,6 @@ const audioContextConstructor =
   window.AudioContext ?? (window as WindowWithWebkitAudio).webkitAudioContext
 const radioCueSupported = Boolean(audioContextConstructor)
 
-let currentIntroStep = 0
-let introWheelLocked = false
 let voiceRelayEnabled = audioPlaybackSupported || speechSupported
 let activeBroadcastToken = 0
 let audioContext: AudioContext | null = null
@@ -389,6 +382,23 @@ const setEpilogueVisible = (visible: boolean) => {
   epilogueShell.hidden = !visible
   epilogueShell.classList.toggle('is-visible', visible)
   document.body.classList.toggle('epilogue-open', visible)
+}
+
+const closeEpilogue = (target: 'responses' | 'top' = 'responses') => {
+  resetEpilogueOverlay()
+
+  if (target === 'top') {
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    })
+    return
+  }
+
+  responsesShell?.scrollIntoView({
+    behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    block: 'start',
+  })
 }
 
 const typeText = async (
@@ -464,7 +474,7 @@ const startLoadingLoop = (token: number) => {
     },
     {
       status: 'Calling in the sheriff, the activist, the balladeer, and the coda.',
-      detail: 'Four different understandings of release are moving toward the same seam in the dark.',
+      detail: 'Three voices and one final inscription are moving toward the same seam in the dark.',
     },
     {
       status: 'Building a relay strong enough to carry a human answer.',
@@ -1207,7 +1217,7 @@ if (
 
       setEpilogueVisible(true)
       await wait(prefersReducedMotion ? 120 : 420)
-      transmissionStatus.textContent = 'The coda is stepping out of the seam.'
+      transmissionStatus.textContent = 'The coda is stepping forward to leave one last line.'
       await wait(prefersReducedMotion ? 120 : 420)
 
       if (voiceRelayEnabled) {
@@ -1229,7 +1239,7 @@ if (
 
     responsesMeta.textContent = ''
     responsesShell.hidden = false
-    transmissionStatus.textContent = 'The coda has left a last line in the room.'
+    transmissionStatus.textContent = 'The coda has left its last line in the room.'
     if (voiceRelayEnabled) {
       await stopAmbientScore(2.1)
       if (broadcastToken === activeBroadcastToken) {
@@ -1273,6 +1283,21 @@ if (
     void stopAmbientScore(0.45)
     setBroadcastState('Signal cut. The relay has been silenced.', voiceRelayEnabled ? 'idle' : 'muted')
     transmissionStatus.textContent = 'Transmission paused by the listener.'
+  })
+
+  epilogueExit?.addEventListener('click', () => {
+    closeEpilogue('responses')
+  })
+
+  epilogueRestart?.addEventListener('click', () => {
+    closeEpilogue('top')
+  })
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return
+    if (!epilogueShell || epilogueShell.hidden) return
+
+    closeEpilogue('responses')
   })
 
   knockButton.addEventListener('click', async () => {
@@ -1325,7 +1350,7 @@ if (
       await resolveLoadingLoop()
       responsesMeta.textContent = ''
       transmissionStatus.textContent = 'The threshold has answered.'
-      requestStatus.textContent = 'Three voices have come back carrying the same song in different forms.'
+      requestStatus.textContent = 'Three voices answered, and one final line stayed behind.'
       await renderResponses(payload)
     } catch (error) {
       clearLoadingLoop()
@@ -1359,7 +1384,6 @@ if (introSteps.length && introLines.length) {
   const applyStep = (index: number) => {
     const safeIndex = Math.max(0, Math.min(index, introLines.length - 1))
     const progress = introLines.length > 1 ? safeIndex / (introLines.length - 1) : 0
-    currentIntroStep = safeIndex
 
     root.style.setProperty('--intro-progress', progress.toFixed(4))
 
@@ -1406,73 +1430,16 @@ if (thresholdStage) {
 }
 
 if (introSection && thresholdStage && introSteps.length) {
-  const scrollMode: ScrollBehavior = prefersReducedMotion ? 'auto' : 'smooth'
+  const syncIntroSnapMode = () => {
+    const thresholdTop = thresholdStage.offsetTop
+    const snapReleasePoint = thresholdTop - window.innerHeight * 0.18
+    const snapActive = window.scrollY < snapReleasePoint
 
-  const lockIntroWheel = () => {
-    introWheelLocked = true
-    window.setTimeout(() => {
-      introWheelLocked = false
-    }, prefersReducedMotion ? 120 : 700)
+    document.documentElement.classList.toggle('intro-snap-active', snapActive)
+    document.body.classList.toggle('intro-snap-active', snapActive)
   }
 
-  const jumpToIntroStep = (index: number) => {
-    const safeIndex = Math.max(0, Math.min(index, introSteps.length - 1))
-    introSteps[safeIndex]?.scrollIntoView({
-      behavior: scrollMode,
-      block: 'start',
-    })
-  }
-
-  const introOwnsViewport = () => {
-    const introRect = introSection.getBoundingClientRect()
-    const stageRect = thresholdStage.getBoundingClientRect()
-
-    return introRect.top <= 0 && stageRect.top > window.innerHeight * 0.12
-  }
-
-  const stageCanReturnToIntro = () => {
-    const stageRect = thresholdStage.getBoundingClientRect()
-    return stageRect.top <= 0 && stageRect.top > -window.innerHeight * 0.03
-  }
-
-  window.addEventListener(
-    'wheel',
-    (event) => {
-      if (Math.abs(event.deltaY) < 2) return
-
-      if (introOwnsViewport()) {
-        event.preventDefault()
-
-        if (introWheelLocked) return
-
-        if (event.deltaY > 0) {
-          if (currentIntroStep < introSteps.length - 1) {
-            jumpToIntroStep(currentIntroStep + 1)
-          } else {
-            thresholdStage.scrollIntoView({
-              behavior: scrollMode,
-              block: 'start',
-            })
-          }
-        } else if (currentIntroStep > 0) {
-          jumpToIntroStep(currentIntroStep - 1)
-        } else {
-          jumpToIntroStep(0)
-        }
-
-        lockIntroWheel()
-        return
-      }
-
-      if (event.deltaY < 0 && stageCanReturnToIntro()) {
-        event.preventDefault()
-
-        if (introWheelLocked) return
-
-        jumpToIntroStep(introSteps.length - 1)
-        lockIntroWheel()
-      }
-    },
-    { passive: false },
-  )
+  syncIntroSnapMode()
+  window.addEventListener('scroll', syncIntroSnapMode, { passive: true })
+  window.addEventListener('resize', syncIntroSnapMode)
 }
