@@ -801,6 +801,14 @@ ul {
   font-size: 0.9rem;
 }
 
+.voice-list-note {
+  margin-top: 14px;
+  color: rgba(228, 208, 183, 0.7);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  max-width: 24ch;
+}
+
 .door-column {
   min-width: 0;
 }
@@ -1594,21 +1602,22 @@ textarea:focus {
   z-index: 2;
   width: min(100%, 1120px);
   max-width: 1120px;
-  padding: 4vh 5vw;
-  display: grid;
-  justify-items: center;
-  align-content: center;
-  gap: 20px;
+  min-height: 100vh;
+  padding: 0 5vw;
   text-align: center;
   pointer-events: auto;
-  transform: translateY(6vh);
 }
 
 .epilogue-label {
+  position: absolute;
+  top: clamp(28px, 6vh, 64px);
+  left: 50%;
+  transform: translateX(-50%);
   margin: 0;
   color: rgba(248, 224, 191, 0.94);
   text-shadow: 0 10px 24px rgba(0, 0, 0, 0.44);
   opacity: 0.88;
+  white-space: nowrap;
 }
 
 .epilogue-label::before,
@@ -1625,13 +1634,18 @@ textarea:focus {
 .epilogue-quote {
   position: relative;
   z-index: 3;
-  max-width: 11ch;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(100%, 14ch);
+  max-width: 14ch;
   margin: 0 auto;
   color: #fff4e5;
   font-family: var(--headline);
-  font-size: clamp(4.2rem, 8vw, 7rem);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
+  font-size: clamp(3.8rem, 7.2vw, 6.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
   text-wrap: balance;
   text-shadow:
     0 24px 64px rgba(0, 0, 0, 0.58),
@@ -1645,14 +1659,14 @@ textarea:focus {
 
 .epilogue-quote.is-awaiting {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translate(-50%, calc(-50% + 18px));
   filter: blur(8px);
 }
 
 .epilogue-quote.is-typing,
 .epilogue-quote:not(.is-awaiting) {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, -50%);
   filter: blur(0);
 }
 
@@ -1669,13 +1683,15 @@ textarea:focus {
 }
 
 .epilogue-actions {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(28px, 7vh, 72px);
+  transform: translateX(-50%) translateY(16px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  margin-top: 10px;
   opacity: 0;
-  transform: translateY(16px);
   transition:
     opacity 420ms ease,
     transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -1683,7 +1699,7 @@ textarea:focus {
 
 .epilogue-shell.is-visible .epilogue-actions {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
   transition-delay: 220ms;
 }
 
@@ -2509,17 +2525,20 @@ textarea:focus {
 
   .epilogue-copy-layer {
     width: min(100%, 92vw);
-    padding: 4vh 6vw;
-    transform: translateY(4vh);
+    min-height: 100vh;
+    padding: 0 6vw;
   }
 
   .epilogue-quote {
+    width: min(100%, 12ch);
     max-width: 12ch;
-    font-size: clamp(2.8rem, 12vw, 4.8rem);
+    font-size: clamp(2.6rem, 10.5vw, 4.5rem);
+    line-height: 1.04;
   }
 
   .epilogue-actions {
     width: 100%;
+    bottom: clamp(22px, 5vh, 44px);
   }
 
   .epilogue-button {

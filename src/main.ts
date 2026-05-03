@@ -28,7 +28,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
               height="54"
             />
             <div class="brand-copy">
-              <p class="eyebrow">Threshold_73 / The Room Behind the Song / transmission no. 1973</p>
+              <p class="eyebrow">The Room Behind the Song</p>
               <p class="brand-title">Threshold_73</p>
             </div>
           </div>
@@ -53,10 +53,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
         <div class="intro-bottom">
           <div class="intro-track">
-            <span>Pat Garrett & Billy the Kid</span>
-            <span>anti-war dusk</span>
-            <span>badge</span>
-            <span>guns in the ground</span>
             <span>threshold</span>
           </div>
           <p class="scroll-cue">Scroll to enter the room</p>
@@ -113,17 +109,17 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="stage-grid">
         <aside class="history-rail">
           <article class="history-card">
-            <p class="card-label">Council Voices</p>
+            <p class="card-label">Council of Voices</p>
             <div class="voice-list">
               <div>
                 <span>01</span>
                 <strong>The Sheriff</strong>
-                <p>burden, surrender, dusk</p>
+                <p>burden, witness, dusk</p>
               </div>
               <div>
                 <span>02</span>
                 <strong>The Activist</strong>
-                <p>rupture, refusal, fire</p>
+                <p>refusal, pressure, fire</p>
               </div>
               <div>
                 <span>03</span>
@@ -131,6 +127,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <p>memory, afterlight, release</p>
               </div>
             </div>
+            <p class="voice-list-note">After the council, a final coda crosses the seam alone.</p>
           </article>
         </aside>
 
@@ -175,13 +172,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
         <aside class="prompt-column">
           <article class="prompt-card">
-            <div class="card-pin" aria-hidden="true"></div>
-            <p class="card-label">Confession Draft</p>
-            <div class="prompt-tags">
-              <span>badge</span>
-              <span>guns</span>
-              <span>door</span>
-            </div>
+
             <p class="prompt-question">
               What role, defense, habit, grief, or old identity are you ready to put in the ground?
             </p>
@@ -261,30 +252,30 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
 
         <div class="responses-grid" id="responses-grid"></div>
-
-        <section class="epilogue-shell" id="epilogue-shell" hidden aria-live="polite">
-          <div class="epilogue-vignette" aria-hidden="true"></div>
-          <div class="epilogue-halo" aria-hidden="true"></div>
-          <div class="epilogue-copy-layer">
-            <p class="card-label epilogue-label">The Coda</p>
-            <h3 class="epilogue-quote is-awaiting" id="epilogue-quote"></h3>
-            <div class="epilogue-actions">
-              <button type="button" class="epilogue-button" id="epilogue-exit">
-                Leave the room
-              </button>
-              <button
-                type="button"
-                class="epilogue-button is-secondary"
-                id="epilogue-restart"
-              >
-                Begin again
-              </button>
-            </div>
-          </div>
-        </section>
       </section>
     </section>
   </main>
+
+  <section class="epilogue-shell" id="epilogue-shell" hidden aria-live="polite">
+    <div class="epilogue-vignette" aria-hidden="true"></div>
+    <div class="epilogue-halo" aria-hidden="true"></div>
+    <div class="epilogue-copy-layer">
+      <p class="card-label epilogue-label">The Coda</p>
+      <h3 class="epilogue-quote is-awaiting" id="epilogue-quote"></h3>
+      <div class="epilogue-actions">
+        <button type="button" class="epilogue-button" id="epilogue-exit">
+          Leave the room
+        </button>
+        <button
+          type="button"
+          class="epilogue-button is-secondary"
+          id="epilogue-restart"
+        >
+          Begin again
+        </button>
+      </div>
+    </div>
+  </section>
 `
 
 interface RitualAgent {
